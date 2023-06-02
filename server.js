@@ -150,6 +150,39 @@ app.get("/profile", async (req, res, next) => {
   }
 });
 
+//patch
+app.patch("/profile", async (req, res, next) => {
+  try {
+    const userId = "647a3030e2ca71d74154fc08";
+    const foundUser = await User.findOne({ _id: userId });
+    if (!foundUser) {
+      return res.status(500).json({
+        message: "Unauthorized",
+      });
+    } else {
+      const updatedUser = await User.findByIdAndUpdate(
+        userId,
+        { $set: req.body },
+        { new: true }
+      );
+      return res.status(201).json({
+        message: "Data Updated....",
+        data: {
+          name: foundUser.name,
+          email: foundUser.email,
+          contact: foundUser.contact,
+          username: foundUser.username,
+        },
+      });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      error: err,
+    });
+  }
+});
+
 app.listen(3001, () => {
   console.log("Server Running on port 3001");
 });
