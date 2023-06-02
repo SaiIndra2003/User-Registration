@@ -120,6 +120,36 @@ app.post("/login", async (req, res, next) => {
   }
 });
 
+//profile page
+
+app.get("/profile", async (req, res, next) => {
+  try {
+    const userId = req.cookie.userId;
+    const foundUser = await User.findOne({ _id: userId });
+    if (!foundUser) {
+      return res.status(500).json({
+        message: "Unauthorized",
+      });
+    } else {
+      console.log("Sending user details.....");
+      return res.status(201).json({
+        message: "Sending user details..",
+        data: {
+          name: foundUser.name,
+          email: foundUser.email,
+          contact: foundUser.contact,
+          username: foundUser.username,
+        },
+      });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      error: err,
+    });
+  }
+});
+
 app.listen(3001, () => {
   console.log("Server Running on port 3001");
 });
