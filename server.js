@@ -38,18 +38,25 @@ app.use((req, res, next) => {
 
 app.post("/register", async (req, res, next) => {
   try {
-    const foundUser = await User.findOne(req.body.username);
+    const foundUser = await User.findOne({ username: req.body.username });
+    const foundMail = await User.findOne({ email: req.body.email });
     if (foundUser) {
       console.log(foundUser);
       return res.status(409).json({
         message: "User Exist",
       });
+    } else if (foundMail) {
+      console.log(foundMail);
+      return res.status(409).json({
+        message: "User with mail id " + foundMail.email + " already exist",
+      });
     } else {
-      const password = req.body.password;
-      const hashedPassword = await bcrypt.hash(password, 10);
+      const data = req.body.password;
+      const saltRounds = 10;
+      const hashedPassword = await bcrypt.hash(data, saltRounds);
 
       const user = new User({
-        _id: mongoose.Types.ObjectId(),
+        _id: new mongoose.Types.ObjectId(),
         name: req.body.name,
         email: req.body.email,
         contact: req.body.contact,
