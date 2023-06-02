@@ -36,6 +36,8 @@ app.use((req, res, next) => {
   next();
 });
 
+//Registration
+
 app.post("/register", async (req, res, next) => {
   try {
     const foundUser = await User.findOne({ username: req.body.username });
@@ -76,6 +78,44 @@ app.post("/register", async (req, res, next) => {
     res.status(500).json({
       message: "Registration failed",
       error: err,
+    });
+  }
+});
+
+//login
+
+app.post("/login", async (req, res, next) => {
+  try {
+    const { username, password } = req.body;
+
+    const foundUser = await User.findOne({ username: username });
+
+    if (!foundUser) {
+      return res.status(404).json({
+        message: "User not Found",
+      });
+    } else {
+      const match = await bcrypt.compare(password, foundUser.password);
+
+      if (match) {
+        res.cookie("userId", foundUser._id, {
+          httpOnly: true,
+          maxAge: 10 * 60 * 1000,
+        });
+
+        return res.status(201).json({
+          message: "User found!!...",
+        });
+      } else {
+        return res.status(404).json({
+          message: "Login failed...!!",
+        });
+      }
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({
+      message: "Login failed...",
     });
   }
 });
