@@ -38,22 +38,32 @@ app.use((req, res, next) => {
 
 app.post("/register", async (req, res, next) => {
   try {
-    const password = await bcrypt.hash(req.body.password, 6);
+    const foundUser = await User.findOne(req.body.username);
+    if (foundUser) {
+      console.log(foundUser);
+      return res.status(409).json({
+        message: "User Exist",
+      });
+    } else {
+      const password = req.body.password;
+      const hashedPassword = await bcrypt.hash(password, 10);
 
-    const user = new User({
-      _id: mongoose.Types.ObjectId(),
-      name: req.body.name,
-      email: req.body.email,
-      contact: req.body.contact,
-      username: req.body.username,
-      password: password,
-    });
+      const user = new User({
+        _id: mongoose.Types.ObjectId(),
+        name: req.body.name,
+        email: req.body.email,
+        contact: req.body.contact,
+        username: req.body.username,
+        password: hashedPassword,
+      });
 
-    await user.save();
+      await user.save();
 
-    res.status(201).json({
-      message: "User created succesfully...",
-    });
+      console.log(user);
+      return res.status(201).json({
+        message: "User created succesfully...",
+      });
+    }
   } catch (err) {
     console.log(err);
     res.status(500).json({
