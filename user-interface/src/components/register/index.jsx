@@ -55,6 +55,11 @@ function Register() {
     } else if (password.length < 8) {
       errors.password = "Password should be at least 8 characters";
     }
+    if (!password.match(/ @|#|\$|^|&/)) {
+      errors.password =
+        "Password should consist of atleast one special character such as : @ # $ ^ &";
+    }
+
     if (!confPassword.trim()) {
       errors.confPassword = "Password is required";
     } else if (confPassword.trim() !== password.trim()) {

@@ -6,8 +6,16 @@ const api = axios.create({
 
 export const registerUser = async (data) => {
   try {
-    console.log(data);
     const response = await api.post("/register", data);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response.data.message);
+  }
+};
+
+export const loginUser = async (data) => {
+  try {
+    const response = await api.post("/login", data);
     return response.data;
   } catch (error) {
     throw new Error(error.response.data.message);
