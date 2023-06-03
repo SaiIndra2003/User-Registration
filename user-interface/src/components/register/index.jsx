@@ -11,7 +11,7 @@ function Register() {
   const [email, setEmail] = useState("");
   const [contact, setContact] = useState("");
   const [gender, setGender] = useState("");
-  const [dob, setDob] = useState(null);
+  const [dob, setDob] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confPassword, checkPassword] = useState("");
@@ -55,7 +55,7 @@ function Register() {
     } else if (password.length < 8) {
       errors.password = "Password should be at least 8 characters";
     }
-    if (!password.match(/ @|#|\$|^|&/)) {
+    if (!password.match(/[@#$^&]/)) {
       errors.password =
         "Password should consist of atleast one special character such as : @ # $ ^ &";
     }
@@ -73,6 +73,7 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validateForm();
+    const message = "";
     setErrors(validationErrors);
 
     if (Object.keys(validationErrors).length === 0) {
@@ -89,7 +90,7 @@ function Register() {
           password: password,
         };
         console.log(data);
-        const message = await registerUser(data);
+        message = await registerUser(data);
         alert(message.message);
       } catch (err) {
         alert(err.message);
@@ -102,7 +103,9 @@ function Register() {
       setUsername("");
       setPassword("");
       checkPassword("");
-      navigate("/");
+      if (message.message === "User created succesfully...") {
+        navigate("/");
+      }
     }
   };
 
