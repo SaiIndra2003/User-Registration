@@ -8,8 +8,21 @@ const UserSchemma = new mongoose.Schema({
   email: {
     type: String,
     required: true,
+    unique: true,
+    match: /\S+@\S+\.\S+/,
   },
   contact: {
+    type: String,
+    required: true,
+    minlength: 10,
+    maxlength: 10,
+  },
+  gender: {
+    type: String,
+    enum: ["Male", "Female", "Transgender"],
+    required: true,
+  },
+  dateofbirth: {
     type: String,
     required: true,
   },
@@ -20,6 +33,8 @@ const UserSchemma = new mongoose.Schema({
   password: {
     type: String,
     required: true,
+    minlength: 8,
+    maxlength: 25,
   },
 });
 

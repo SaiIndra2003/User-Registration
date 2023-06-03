@@ -27,6 +27,8 @@ exports.register_user = async (req, res, next) => {
         name: req.body.name,
         email: req.body.email,
         contact: req.body.contact,
+        gender: req.body.gender,
+        dateofbirth: req.body.dateofbirth,
         username: req.body.username,
         password: hashedPassword,
       });

@@ -16,6 +16,8 @@ exports.get_user_profile = async (req, res, next) => {
           name: foundUser.name,
           email: foundUser.email,
           contact: foundUser.contact,
+          dateofbirth: foundUser.dateofbirth,
+          gender: foundUser.gender,
           username: foundUser.username,
         },
       });
@@ -48,6 +50,8 @@ exports.update_user_profile = async (req, res, next) => {
           name: foundUser.name,
           email: foundUser.email,
           contact: foundUser.contact,
+          dateofbirth: foundUser.dateofbirth,
+          gender: foundUser.gender,
           username: foundUser.username,
         },
       });
