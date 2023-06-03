@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
-import { registerUser } from "../api";
+import { registerUser } from "../api/api";
 
 import "./styles.scss";
 
