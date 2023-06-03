@@ -1,0 +1,115 @@
+.register {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  /* flex-direction: column; */
+  //   gap: 20px;
+  /* justify-content: center; */
+  align-items: center;
+
+  &__content-wrapper {
+    width: 30%;
+    display: flex;
+    font-size: x-large;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    margin-left: 111px;
+    // h1 {
+    //   color: black;
+    // }
+    h2 {
+      width: 100%;
+      justify-content: center;
+      display: flex;
+    }
+  }
+
+  &__form-wrapper {
+    height: 100%;
+    width: 60%;
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      width: 100%;
+      height: auto;
+      align-items: baseline;
+      /* margin-left: 600px; */
+      border: 4px solid black;
+      background: aliceblue;
+      border-radius: 40px;
+      /* margin-right: 544px; */
+      /* margin-bottom: 13px; */
+      padding: 69px;
+      padding-left: 40px;
+      padding-bottom: 43px;
+    }
+
+    &__form-input {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      width: 100%;
+      align-items: baseline;
+
+      label {
+        font-size: medium;
+        font-weight: 600;
+        margin-right: 5px;
+      }
+
+      input {
+        display: flex;
+        width: 100%;
+        /* height: fit-content; */
+        border: 3px solid black;
+        border-radius: 20px;
+        height: 40px;
+        text-align: center;
+      }
+      select {
+        display: flex;
+        width: 100%;
+        /* height: fit-content; */
+        border: 3px solid black;
+        border-radius: 20px;
+        height: 40px;
+
+        text-align: center;
+      }
+    }
+    &__button {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      button {
+        display: flex;
+        border: 2px solid black;
+        border-radius: 40px;
+        padding: 8px;
+        width: 100px;
+        /* text-align: center; */
+        justify-content: center;
+        cursor: pointer;
+        background: transparent;
+      }
+    }
+  }
+}
+
+.check {
+  width: 30px;
+}
+
+svg {
+  cursor: pointer;
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+}
