@@ -25,6 +25,7 @@ const UserSchemma = new mongoose.Schema({
   dateofbirth: {
     type: String,
     required: true,
+    match: /^[0-9]{1,2}\-[0-9]{1,2}\-[0-9]{4,4}$/,
   },
   username: {
     type: String,
@@ -33,8 +34,6 @@ const UserSchemma = new mongoose.Schema({
   password: {
     type: String,
     required: true,
-    minlength: 8,
-    maxlength: 25,
   },
 });
 
