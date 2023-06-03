@@ -1,5 +1,8 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+
+import { registerUser } from "../api";
 
 import "./styles.scss";
 
@@ -14,6 +17,7 @@ function Register() {
   const [confPassword, checkPassword] = useState("");
   const [errors, setErrors] = useState({});
   const [passCheck, setCheck] = useState(true);
+  const navigate = useNavigate();
 
   function validateForm() {
     let errors = {};
@@ -61,20 +65,30 @@ function Register() {
     return errors;
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validateForm();
     setErrors(validationErrors);
 
     if (Object.keys(validationErrors).length === 0) {
-      console.log("Form submitted!");
-      console.log("Name:", name);
-      console.log("Email:", email);
-      console.log("Contact:", contact);
-      console.log("Gender:", gender);
-      console.log("DOB:", dob);
-      console.log("Username:", username);
-      console.log("Password:", password);
+      try {
+        const [year, month, day] = dob.split("-");
+        const dateofbirth = `${day}-${month}-${year}`;
+        const data = {
+          name: name,
+          email: email,
+          contact: contact,
+          gender: gender,
+          dateofbirth: dateofbirth,
+          username: username,
+          password: password,
+        };
+        console.log(data);
+        const message = await registerUser(data);
+        alert(message.message);
+      } catch (err) {
+        alert(err.message);
+      }
       setName("");
       setEmail("");
       setContact("");
@@ -82,6 +96,8 @@ function Register() {
       setDob(null);
       setUsername("");
       setPassword("");
+      checkPassword("");
+      navigate("/");
     }
   };
 
@@ -138,8 +154,9 @@ function Register() {
               required
             >
               <option value="">Select Gender</option>
-              <option value="male">Male</option>
-              <option value="female">Female</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Transgender">Transgender</option>
             </select>
             {errors.gender && <span className="error">{errors.gender}</span>}
           </div>

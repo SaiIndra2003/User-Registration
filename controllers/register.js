@@ -18,8 +18,10 @@ exports.register_user = async (req, res, next) => {
         message: "User with mail id " + foundMail.email + " already exist",
       });
     } else {
+      console.log(req.body);
       const data = req.body.password;
       const saltRounds = 10;
+      console.log(data);
       const hashedPassword = await bcrypt.hash(data, saltRounds);
 
       const user = new User({

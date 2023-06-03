@@ -37,7 +37,7 @@
       height: auto;
       align-items: baseline;
       /* margin-left: 600px; */
-      border: 4px solid black;
+
       background: aliceblue;
       border-radius: 40px;
       /* margin-right: 544px; */
@@ -64,7 +64,7 @@
         display: flex;
         width: 100%;
         /* height: fit-content; */
-        border: 3px solid black;
+
         border-radius: 20px;
         height: 40px;
         text-align: center;
@@ -73,7 +73,7 @@
         display: flex;
         width: 100%;
         /* height: fit-content; */
-        border: 3px solid black;
+        border: 1px solid black;
         border-radius: 20px;
         height: 40px;
 
@@ -96,6 +96,10 @@
         justify-content: center;
         cursor: pointer;
         background: transparent;
+      }
+      button:hover {
+        background-color: var(--text-color);
+        color: var(--form-background-color);
       }
     }
   }
