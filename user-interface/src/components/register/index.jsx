@@ -20,10 +20,10 @@ function Register() {
     username: "",
     password: "",
   });
-
   const [confPassword, checkPassword] = useState("");
   const [errors, setErrors] = useState({});
   const [passCheck, setCheck] = useState(true);
+
   const navigate = useNavigate();
 
   function validateForm() {
