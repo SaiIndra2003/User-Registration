@@ -4,4 +4,140 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  &__welcome-name {
+    width: 100%;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+    h2 {
+      font-size: xxx-large;
+      font-weight: 400;
+    }
+  }
+
+  &__content {
+    height: calc(100% - 150px);
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    // padding: 50px;
+
+    &__button {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+
+      button {
+        height: fit-content;
+        width: 21%;
+        border: 1px solid black;
+        margin-right: 20%;
+        /* margin-top: 5%; */
+        border-radius: 20px;
+        padding: 2%;
+        background: transparent;
+      }
+      button:hover {
+        cursor: pointer;
+        background-color: black;
+        color: white;
+      }
+    }
+
+    form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: baseline;
+      margin-left: 22%;
+      gap: 20px;
+      position: relative;
+      border: 1px solid black;
+      border-radius: 40px;
+      padding: 2%;
+      margin-right: 20%;
+      margin-bottom: 3%;
+      background-color: #fba8ff;
+    }
+
+    &__edit {
+      display: flex;
+      justify-content: end;
+      width: 100%;
+
+      svg {
+        cursor: pointer;
+        margin-right: 24%;
+      }
+    }
+
+    &__inputs {
+      display: flex;
+      gap: 15%;
+      width: 100%;
+      height: -moz-fit-content;
+      height: fit-content;
+      /* justify-content: center; */
+      margin-left: 16%;
+
+      label {
+        width: 6%;
+        display: flex;
+        text-align: center;
+        align-items: center;
+        font-size: medium;
+        font-style: bold;
+      }
+
+      input {
+        width: 50%;
+        height: fit-content;
+        border: 1px solid black;
+        border-radius: 20px;
+        padding: 2%;
+        justify-content: center;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        text-decoration: none;
+        font-size: medium;
+        background: transparent;
+        font-weight: 400;
+      }
+
+      select {
+        width: 50%;
+        height: fit-content;
+        border: 1px solid black;
+        border-radius: 20px;
+        padding: 2%;
+        justify-content: center;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        background: transparent;
+
+        option {
+          width: 50%;
+          height: fit-content;
+          border: 1px solid black;
+          border-radius: 20px;
+          padding: 2%;
+          justify-content: center;
+          display: flex;
+          align-items: center;
+          text-align: center;
+          background: transparent;
+          font-weight: 400;
+        }
+      }
+    }
+  }
 }

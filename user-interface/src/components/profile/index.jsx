@@ -23,11 +23,9 @@ const Profile = () => {
   const fetchData = async () => {
     try {
       const response = await getUser();
-      alert(response.message);
       setData(response.data);
       setDob(changeDate(response.data.dateofbirth));
     } catch (error) {
-      alert(error.message);
       if (error.message === "Unauthorized") {
         navigate("/login");
       }
@@ -63,7 +61,7 @@ const Profile = () => {
       </div>
       <div className="profile__content">
         <form onSubmit={handleSubmit}>
-          <div className="profile__conetnt__edit">
+          <div className="profile__content__edit">
             <FaEdit onClick={() => setEdit(!edit)} />
           </div>
           <div className="profile__content__inputs">
@@ -109,7 +107,7 @@ const Profile = () => {
             />
           </div>
           <div className="profile__content__inputs">
-            <label> Date of Birth: </label>
+            <label> DOB: </label>
             {!edit ? (
               <input value={data.dateofbirth} disabled={!edit} />
             ) : (
@@ -150,7 +148,7 @@ const Profile = () => {
               </select>
             )}
           </div>
-          <div className="profile__conetnt__button">
+          <div className="profile__content__button">
             {edit && <button type="submit">submit</button>}
           </div>
         </form>
