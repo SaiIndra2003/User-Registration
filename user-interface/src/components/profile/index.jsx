@@ -4,22 +4,33 @@ import { FaEdit } from "react-icons/fa";
 
 import "./styles.scss";
 import { getUser, updateUser } from "../api/api";
+import Input from "./containers/input";
+import Gender from "./containers/gender";
+import DOB from "./containers/Dob";
+
+const changeDate = (Dob) => {
+  const [day, month, year] = Dob.split("-");
+  const dateofbirt = `${year}-${month}-${day}`;
+  return dateofbirt;
+};
 
 const Profile = () => {
   const [data, setData] = useState({});
   const [dob, setDob] = useState("");
-
   const [edit, setEdit] = useState(false);
   const [submit, setSubmit] = useState(false);
 
   const navigate = useNavigate();
 
-  const changeDate = (Dob) => {
-    const [day, month, year] = Dob.split("-");
-    const dateofbirt = `${year}-${month}-${day}`;
-    return dateofbirt;
+  const changeData = (name, value) => {
+    setSubmit(true);
+    setData({
+      ...data,
+      [name]: value,
+    });
   };
 
+  // Get request
   const fetchData = async () => {
     try {
       const response = await getUser();
@@ -34,6 +45,8 @@ const Profile = () => {
   useEffect(() => {
     fetchData();
   }, []);
+
+  //patch request
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -51,10 +64,6 @@ const Profile = () => {
     }
   };
 
-  if (data === null) {
-    return <div>Loading...</div>;
-  }
-  //   console.log(data);
   return (
     <div className="profile">
       <div className="profile__welcome-name">
@@ -65,90 +74,48 @@ const Profile = () => {
           <div className="profile__content__edit">
             <FaEdit onClick={() => setEdit(!edit)} />
           </div>
-          <div className="profile__content__inputs">
-            <label> Name: </label>
-            <input
-              value={data.name}
-              disabled={!edit}
-              onChange={(e) => {
-                setSubmit(true);
-                setData({
-                  ...data,
-                  name: e.target.value,
-                });
-              }}
-            />
-          </div>
-          <div className="profile__content__inputs">
-            <label> Email: </label>
-            <input
-              value={data.email}
-              disabled={!edit}
-              onChange={(e) => {
-                setSubmit(true);
-                setData({
-                  ...data,
-                  email: e.target.value,
-                });
-              }}
-            />
-          </div>
-          <div className="profile__content__inputs">
-            <label> Contact: </label>
-            <input
-              value={data.contact}
-              disabled={!edit}
-              onChange={(e) => {
-                setSubmit(true);
-                setData({
-                  ...data,
-                  contact: e.target.value,
-                });
-              }}
-            />
-          </div>
-          <div className="profile__content__inputs">
-            <label> DOB: </label>
-            {!edit ? (
-              <input value={data.dateofbirth} disabled={!edit} />
-            ) : (
-              <input
-                type="date"
-                value={dob}
-                onChange={(e) => {
-                  setSubmit(true);
-                  setData({
-                    ...data,
-                    dateofbirth: changeDate(e.target.value),
-                  });
-                }}
-                defaultValue={dob}
-              />
-            )}
-          </div>
-          <div className="profile__content__inputs">
-            <label> Gender: </label>
-            {!edit ? (
-              <input value={data.gender} disabled={!edit} />
-            ) : (
-              <select
-                value={data.gender}
-                onChange={(e) => {
-                  setData({
-                    ...data,
-                    gender: e.target.value,
-                  });
-                  setSubmit(true);
-                }}
-                required
-              >
-                <option value="">Select Gender</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                <option value="Transgender">Transgender</option>
-              </select>
-            )}
-          </div>
+
+          <Input
+            label="Name:"
+            value={data.name}
+            edit={!edit}
+            changeData={changeData}
+            name="name"
+          />
+
+          <Input
+            label="Email:"
+            value={data.email}
+            edit={!edit}
+            changeData={changeData}
+            name="email"
+          />
+
+          <Input
+            label="Contact:"
+            value={data.contact}
+            edit={!edit}
+            changeData={changeData}
+            name="contact"
+          />
+
+          <DOB
+            label="DOB:"
+            edit={!edit}
+            dob={dob}
+            name="dateofbirth"
+            value={data.dateofbirth}
+            changeData={changeData}
+          />
+
+          <Gender
+            label="Gender:"
+            edit={!edit}
+            value={data.gender}
+            name="gender"
+            changeData={changeData}
+          />
+
           <div className="profile__content__button">
             {edit && <button type="submit">submit</button>}
           </div>

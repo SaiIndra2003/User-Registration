@@ -4,11 +4,9 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 import { registerUser } from "../api/api";
 import Input from "./containers/input";
-
-import "./styles.scss";
 import Gender from "./containers/gender";
 import Button from "./containers/button";
-import PassSymbol from "./containers/checkPass";
+import "./styles.scss";
 
 function Register() {
   const [data, setData] = useState({
