@@ -73,7 +73,7 @@ function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validateForm();
-    const message = "";
+    let message = "";
     setErrors(validationErrors);
 
     if (Object.keys(validationErrors).length === 0) {
@@ -89,7 +89,6 @@ function Register() {
           username: username,
           password: password,
         };
-        console.log(data);
         message = await registerUser(data);
         alert(message.message);
       } catch (err) {
@@ -99,7 +98,7 @@ function Register() {
       setEmail("");
       setContact("");
       setGender("");
-      setDob(null);
+      setDob("");
       setUsername("");
       setPassword("");
       checkPassword("");

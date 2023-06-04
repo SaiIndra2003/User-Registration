@@ -2,7 +2,7 @@ const User = require("../Schema/User");
 
 exports.get_user_profile = async (req, res, next) => {
   try {
-    const userId = req.cookie.userId;
+    const userId = req.cookies.userId;
     const foundUser = await User.findOne({ _id: userId });
     if (!foundUser) {
       return res.status(500).json({
@@ -11,7 +11,7 @@ exports.get_user_profile = async (req, res, next) => {
     } else {
       console.log("Sending user details.....");
       return res.status(201).json({
-        message: "Sending user details..",
+        message: "Sending user details...",
         data: {
           name: foundUser.name,
           email: foundUser.email,
@@ -25,6 +25,7 @@ exports.get_user_profile = async (req, res, next) => {
   } catch (err) {
     console.log(err);
     res.status(500).json({
+      message: "User not Logged",
       error: err,
     });
   }

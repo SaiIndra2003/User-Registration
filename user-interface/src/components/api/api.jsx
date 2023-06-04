@@ -15,7 +15,20 @@ export const registerUser = async (data) => {
 
 export const loginUser = async (data) => {
   try {
-    const response = await api.post("/login", data);
+    const response = await api.post("/login", data, {
+      withCredentials: true,
+    });
+
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response.data.message);
+  }
+};
+
+export const getUser = async () => {
+  try {
+    const response = await api.get("/profile", { withCredentials: true });
+    console.log(response.data);
     return response.data;
   } catch (error) {
     throw new Error(error.response.data.message);

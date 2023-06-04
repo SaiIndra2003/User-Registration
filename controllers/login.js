@@ -4,6 +4,7 @@ const User = require("../Schema/User");
 exports.login = async (req, res, next) => {
   try {
     const { username, password } = req.body;
+    console.log(username);
 
     const foundUser = await User.findOne({ username: username });
 
@@ -16,10 +17,9 @@ exports.login = async (req, res, next) => {
 
       if (match) {
         res.cookie("userId", foundUser._id, {
-          httpOnly: true,
           maxAge: 10 * 60 * 1000,
         });
-
+        
         return res.status(201).json({
           message: "User found!!...",
         });

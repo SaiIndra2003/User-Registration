@@ -45,6 +45,10 @@ const LoginForm = () => {
         alert(err.message);
       }
     }
+    setUsername("");
+    setPassword("");
+    setErrors({});
+    setVisible(false);
   };
 
   return (
@@ -77,9 +81,9 @@ const LoginForm = () => {
               <span className="error">{errors.password}</span>
             )}
             {visible ? (
-              <FaEye onClick={handleCheck} />
-            ) : (
               <FaEyeSlash onClick={handleCheck} />
+            ) : (
+              <FaEye onClick={handleCheck} />
             )}
           </div>
           <div className="login__form-wrapper__button">
