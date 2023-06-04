@@ -45,6 +45,7 @@ const Profile = () => {
       } catch (error) {
         alert(error.message);
       }
+      setEdit(false);
     } else {
       alert("No changes have made yet to submit");
     }

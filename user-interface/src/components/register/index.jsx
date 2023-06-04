@@ -7,13 +7,16 @@ import { registerUser } from "../api/api";
 import "./styles.scss";
 
 function Register() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [contact, setContact] = useState("");
-  const [gender, setGender] = useState("");
-  const [dob, setDob] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [data, setData] = useState({
+    name: "",
+    email: "",
+    contact: "",
+    gender: "",
+    dateofbirth: "",
+    username: "",
+    password: "",
+  });
+
   const [confPassword, checkPassword] = useState("");
   const [errors, setErrors] = useState({});
   const [passCheck, setCheck] = useState(true);
@@ -22,47 +25,47 @@ function Register() {
   function validateForm() {
     let errors = {};
 
-    if (!name.trim()) {
+    if (!data.name.trim()) {
       errors.name = "Name is required";
     }
 
-    if (!email.trim()) {
+    if (!data.email.trim()) {
       errors.email = "Email is required";
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
+    } else if (!/\S+@\S+\.\S+/.test(data.email)) {
       errors.email = "Invalid email format";
     }
 
-    if (!contact.trim()) {
+    if (!data.contact.trim()) {
       errors.contact = "Contact number is required";
-    } else if (!/^\d{10}$/.test(contact)) {
+    } else if (!/^\d{10}$/.test(data.contact)) {
       errors.contact = "Contact number must be 10 digits";
     }
 
-    if (!gender) {
+    if (!data.gender) {
       errors.gender = "Gender is required";
     }
 
-    if (!dob) {
+    if (!data.dateofbirth) {
       errors.dob = "Date of Birth is required";
     }
 
-    if (!username.trim()) {
+    if (!data.username.trim()) {
       errors.username = "Username is required";
     }
 
-    if (!password.trim()) {
+    if (!data.password.trim()) {
       errors.password = "Password is required";
-    } else if (password.length < 8) {
+    } else if (data.password.length < 8) {
       errors.password = "Password should be at least 8 characters";
     }
-    if (!password.match(/[@#$^&]/)) {
+    if (!data.password.match(/[@#$^&]/)) {
       errors.password =
         "Password should consist of atleast one special character such as : @ # $ ^ &";
     }
 
     if (!confPassword.trim()) {
       errors.confPassword = "Password is required";
-    } else if (confPassword.trim() !== password.trim()) {
+    } else if (confPassword.trim() !== data.password.trim()) {
       errors.confPassword = "Passwords didnt matched...";
       errors.password = "Passwords didnt matched...";
     }
@@ -78,30 +81,28 @@ function Register() {
 
     if (Object.keys(validationErrors).length === 0) {
       try {
-        const [year, month, day] = dob.split("-");
-        const dateofbirth = `${day}-${month}-${year}`;
-        const data = {
-          name: name,
-          email: email,
-          contact: contact,
-          gender: gender,
-          dateofbirth: dateofbirth,
-          username: username,
-          password: password,
+        const [year, month, day] = data.dateofbirth.split("-");
+        const dob = `${day}-${month}-${year}`;
+        const sentData = {
+          ...data,
+          dateofbirth: dob,
         };
-        message = await registerUser(data);
+        message = await registerUser(sentData);
         alert(message.message);
       } catch (err) {
         alert(err.message);
       }
-      setName("");
-      setEmail("");
-      setContact("");
-      setGender("");
-      setDob("");
-      setUsername("");
-      setPassword("");
+
       checkPassword("");
+      setData({
+        name: "",
+        email: "",
+        contact: "",
+        gender: "",
+        dateofbirth: "",
+        username: "",
+        password: "",
+      });
       if (message.message === "User created succesfully...") {
         navigate("/");
       }
@@ -121,8 +122,8 @@ function Register() {
             {" "}
             <input
               type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={data.name}
+              onChange={(e) => setData({ ...data, name: e.target.value })}
               placeholder="Enter your Name"
               required
             />
@@ -133,8 +134,8 @@ function Register() {
             {" "}
             <input
               type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={data.email}
+              onChange={(e) => setData({ ...data, email: e.target.value })}
               placeholder="Enter your Email"
               required
             />
@@ -145,8 +146,8 @@ function Register() {
             {" "}
             <input
               type="tel"
-              value={contact}
-              onChange={(e) => setContact(e.target.value)}
+              value={data.contact}
+              onChange={(e) => setData({ ...data, contact: e.target.value })}
               placeholder="Enter your Contact number"
               required
             />
@@ -156,8 +157,8 @@ function Register() {
           <div className="register__form-wrapper__form-input">
             {" "}
             <select
-              value={gender}
-              onChange={(e) => setGender(e.target.value)}
+              value={data.gender}
+              onChange={(e) => setData({ ...data, gender: e.target.value })}
               required
             >
               <option value="">Select Gender</option>
@@ -172,8 +173,10 @@ function Register() {
             {" "}
             <input
               type="date"
-              value={dob}
-              onChange={(e) => setDob(e.target.value)}
+              value={data.dateofbirth}
+              onChange={(e) =>
+                setData({ ...data, dateofbirth: e.target.value })
+              }
               required
             />
             {errors.dob && <span className="error">{errors.dob}</span>}
@@ -183,8 +186,8 @@ function Register() {
             {" "}
             <input
               type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              value={data.username}
+              onChange={(e) => setData({ ...data, username: e.target.value })}
               placeholder="Enter your User Name"
               required
             />
@@ -197,8 +200,8 @@ function Register() {
             {" "}
             <input
               type={passCheck ? "password" : "text"}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              value={data.password}
+              onChange={(e) => setData({ ...data, password: e.target.value })}
               placeholder="Enter your Password"
               required
             />
