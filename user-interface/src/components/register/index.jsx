@@ -3,8 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 import { registerUser } from "../api/api";
+import Input from "./containers/input";
 
 import "./styles.scss";
+import Gender from "./containers/gender";
+import Button from "./containers/button";
+import PassSymbol from "./containers/checkPass";
 
 function Register() {
   const [data, setData] = useState({
@@ -73,12 +77,20 @@ function Register() {
     return errors;
   }
 
+  const changeData = (name, value) => {
+    setData({ ...data, [name]: value });
+  };
+
+  const changePass = (name, value) => {
+    checkPassword(value);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validateForm();
     let message = "";
     setErrors(validationErrors);
-
+    console.log(errors);
     if (Object.keys(validationErrors).length === 0) {
       try {
         const [year, month, day] = data.dateofbirth.split("-");
@@ -112,125 +124,82 @@ function Register() {
   return (
     <div className="register">
       <div className="register__content-wrapper">
-        {" "}
         <h2>Registration Form</h2>
       </div>
       <div className="register__form-wrapper">
-        {" "}
         <form onSubmit={handleSubmit}>
-          <div className="register__form-wrapper__form-input">
-            {" "}
-            <input
-              type="text"
-              value={data.name}
-              onChange={(e) => setData({ ...data, name: e.target.value })}
-              placeholder="Enter your Name"
-              required
-            />
-            {errors.name && <span className="error">{errors.name}</span>}
-          </div>
+          <Input
+            type="text"
+            value={data.name}
+            placeholder="Enter Your name here"
+            name="name"
+            changeData={changeData}
+            errors={errors.name}
+          />
 
-          <div className="register__form-wrapper__form-input">
-            {" "}
-            <input
-              type="email"
-              value={data.email}
-              onChange={(e) => setData({ ...data, email: e.target.value })}
-              placeholder="Enter your Email"
-              required
-            />
-            {errors.email && <span className="error">{errors.email}</span>}
-          </div>
+          <Input
+            type="email"
+            value={data.email}
+            placeholder="Enter Mail-id"
+            name="email"
+            changeData={changeData}
+            errors={errors.email}
+          />
 
-          <div className="register__form-wrapper__form-input">
-            {" "}
-            <input
-              type="tel"
-              value={data.contact}
-              onChange={(e) => setData({ ...data, contact: e.target.value })}
-              placeholder="Enter your Contact number"
-              required
-            />
-            {errors.contact && <span className="error">{errors.contact}</span>}
-          </div>
+          <Input
+            type="tel"
+            value={data.contact}
+            placeholder="Enter Contact"
+            name="contact"
+            changeData={changeData}
+            errors={errors.contact}
+          />
 
-          <div className="register__form-wrapper__form-input">
-            {" "}
-            <select
-              value={data.gender}
-              onChange={(e) => setData({ ...data, gender: e.target.value })}
-              required
-            >
-              <option value="">Select Gender</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-              <option value="Transgender">Transgender</option>
-            </select>
-            {errors.gender && <span className="error">{errors.gender}</span>}
-          </div>
+          <Gender name="gender" value={data.gender} errors={errors.gender} />
 
-          <div className="register__form-wrapper__form-input">
-            {" "}
-            <input
-              type="date"
-              value={data.dateofbirth}
-              onChange={(e) =>
-                setData({ ...data, dateofbirth: e.target.value })
-              }
-              required
-            />
-            {errors.dob && <span className="error">{errors.dob}</span>}
-          </div>
+          <Input
+            type="date"
+            value={data.dateofbirth}
+            placeholder="Enter Contact"
+            name="dateofbirth"
+            changeData={changeData}
+            errors={errors.dob}
+          />
 
-          <div className="register__form-wrapper__form-input">
-            {" "}
-            <input
-              type="text"
-              value={data.username}
-              onChange={(e) => setData({ ...data, username: e.target.value })}
-              placeholder="Enter your User Name"
-              required
-            />
-            {errors.username && (
-              <span className="error">{errors.username}</span>
-            )}
-          </div>
+          <Input
+            type="text"
+            value={data.username}
+            placeholder="Enter your User Name"
+            name="username"
+            changeData={changeData}
+            errors={errors.username}
+          />
 
-          <div className="register__form-wrapper__form-input">
-            {" "}
-            <input
-              type={passCheck ? "password" : "text"}
-              value={data.password}
-              onChange={(e) => setData({ ...data, password: e.target.value })}
-              placeholder="Enter your Password"
-              required
-            />
-            {errors.password && (
-              <span className="error">{errors.password}</span>
-            )}
-            {passCheck ? (
-              <FaEyeSlash onClick={() => setCheck(!passCheck)} />
-            ) : (
-              <FaEye onClick={() => setCheck(!passCheck)} />
-            )}
-          </div>
-          <div className="register__form-wrapper__form-input">
-            {" "}
-            <input
-              type="text"
-              value={confPassword}
-              onChange={(e) => checkPassword(e.target.value)}
-              placeholder="re-enter your Password"
-              required
-            />
-            {errors.confPassword && (
-              <span className="error">{errors.confPassword}</span>
-            )}
-          </div>
-          <div className="register__form-wrapper__button">
-            {" "}
-            <button type="submit">Register</button>
-          </div>
+          <Input
+            type={passCheck ? "password" : "text"}
+            value={data.password}
+            placeholder="Enter your Password"
+            name="password"
+            changeData={changeData}
+            errors={errors.password}
+          />
+
+          {passCheck ? (
+            <FaEyeSlash onClick={() => setCheck(!passCheck)} />
+          ) : (
+            <FaEye onClick={() => setCheck(!passCheck)} />
+          )}
+
+          <Input
+            type="text"
+            value={confPassword}
+            placeholder="re-enter your Password"
+            name="confPassword"
+            changeData={changePass}
+            errors={errors.confPassword}
+          />
+
+          <Button />
         </form>
       </div>
     </div>
