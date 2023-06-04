@@ -9,7 +9,6 @@ exports.get_user_profile = async (req, res, next) => {
         message: "Unauthorized",
       });
     } else {
-      console.log("Sending user details.....");
       return res.status(201).json({
         message: "Sending user details...",
         data: {
@@ -34,6 +33,7 @@ exports.get_user_profile = async (req, res, next) => {
 exports.update_user_profile = async (req, res, next) => {
   try {
     const userId = req.cookies.userId;
+    console.log(userId);
     const foundUser = await User.findOne({ _id: userId });
     if (!foundUser) {
       return res.status(500).json({

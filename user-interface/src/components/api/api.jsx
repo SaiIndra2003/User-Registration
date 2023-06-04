@@ -28,7 +28,17 @@ export const loginUser = async (data) => {
 export const getUser = async () => {
   try {
     const response = await api.get("/profile", { withCredentials: true });
-    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response.data.message);
+  }
+};
+
+export const updateUser = async (data) => {
+  try {
+    const response = await api.patch("/profile", data, {
+      withCredentials: true,
+    });
     return response.data;
   } catch (error) {
     throw new Error(error.response.data.message);
